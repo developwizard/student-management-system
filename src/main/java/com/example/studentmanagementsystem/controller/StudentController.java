@@ -5,10 +5,7 @@ import com.example.studentmanagementsystem.service.impl.StudentServiceImpl;
 import lombok.val;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("students")
@@ -34,7 +31,7 @@ public class StudentController {
     /**
      * Create student
      *
-     * @param model Student blank object
+     * @param model Holder for model attributes
      * @return create_student.html page
      */
     @GetMapping("new")
@@ -53,6 +50,38 @@ public class StudentController {
     @PostMapping
     public String saveStudent(@ModelAttribute("student") Student student) {
         studentService.saveStudent(student);
+        return "redirect:/students";
+    }
+
+    /**
+     * Returns the html page to update the student
+     *
+     * @param id    Student ID
+     * @param model Holder for model attributes
+     * @return update_student.html page
+     */
+    @GetMapping("update/{id}")
+    public String editStudent(@PathVariable("id") Long id, Model model) {
+        val student = studentService.getStudentById(id);
+        model.addAttribute("student", student);
+        return "update_student";
+    }
+
+    /**
+     * Updates student
+     *
+     * @param id      Student ID
+     * @param student Updated student info
+     * @return redirect to students.html page
+     */
+    @PostMapping("{id}")
+    public String updateStudent(@PathVariable("id") Long id,
+                                @ModelAttribute("student") Student student) {
+        val studentFromDb = studentService.getStudentById(id);
+        studentFromDb.setFirstName(student.getFirstName());
+        studentFromDb.setLastName(student.getLastName());
+        studentFromDb.setEmail(student.getEmail());
+        studentService.saveStudent(studentFromDb);
         return "redirect:/students";
     }
 }

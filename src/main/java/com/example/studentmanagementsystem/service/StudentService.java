@@ -19,4 +19,12 @@ public interface StudentService {
      * @return Saved student
      */
     Student saveStudent(Student student);
+
+    /**
+     * Finds student by ID
+     *
+     * @param id Student ID
+     * @return Student
+     */
+    Student getStudentById(Long id);
 }
