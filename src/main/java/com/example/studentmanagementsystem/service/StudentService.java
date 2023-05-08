@@ -11,4 +11,12 @@ public interface StudentService {
      * @return Students list
      */
     List<Student> getAllStudents();
+
+    /**
+     * Saves student in DB
+     *
+     * @param student Student to save
+     * @return Saved student
+     */
+    Student saveStudent(Student student);
 }
