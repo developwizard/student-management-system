@@ -27,4 +27,11 @@ public interface StudentService {
      * @return Student
      */
     Student getStudentById(Long id);
+
+    /**
+     * Removes student from DB
+     *
+     * @param id Student ID
+     */
+    void deleteStudentById(Long id);
 }

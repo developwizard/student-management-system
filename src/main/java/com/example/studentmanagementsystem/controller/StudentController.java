@@ -84,4 +84,16 @@ public class StudentController {
         studentService.saveStudent(studentFromDb);
         return "redirect:/students";
     }
+
+    /**
+     * Delete student
+     *
+     * @param id Student ID
+     * @return redirect to students.html page
+     */
+    @GetMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable("id") Long id) {
+        studentService.deleteStudentById(id);
+        return "redirect:/students";
+    }
 }
